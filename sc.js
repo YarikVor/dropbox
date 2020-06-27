@@ -32,7 +32,19 @@ let spr_grass = new Image(),
     spr_box.src     = "img/box.png";
 
 //--> Ящики та падіння:
-let box = [[55,12,1],[55,12,0]];
+let box;
+box = [
+//   наявне ,x  ,y  ,швидкість
+];
+
+let Time_spam =200; //ms
+
+//--Time
+
+let timeBegin = new Date();
+let timeEnd = new Date();
+let run = true;
+
 /*_________________________________________________________________________*/
 
 //#Функції:
@@ -104,6 +116,7 @@ function Load() {
 }
 
 function Create() {
+    setTimeout(SpawningBox, Time_spam);
     PreDraw();
     Main();
 }
@@ -120,13 +133,26 @@ function Update() {
 	} else if (onKeyPressed(68)){
 		player.x += player.speed;
 	}
+
+    if (Time_spam > 15){
+        Time_spam -= 0.02;
+    }
+    if (run){
+	    timeEnd = new Date();
+    }
 	for(let i = 0; i<box.length; i++){
-	    if (box[i][0]<=player.x && box[i][1]+32<=player.y && box[i][0]>=player.x+32 && box[i][1]+64>=player.y){
-            alert("Dead");
+	    if (box[i][1]-32<=player.x && box[i][1]+32>=player.x && box[i][2]+32>=player.y && box[i][2]<=player.y ){
+            box[i]=[false,0,-32,0];
+            run = false;
         }
-        box[i][1]+=box[i][2];
-        box[i][2]+=0.1;
-        
+        if (box[i][0] == true){
+            box[i][2]+=box[i][3];
+            box[i][3]+=0.2;
+        }
+        if (box[i][2]>=330){
+            box[i]=[false,0,-32,0];
+        }
+
     }
 }
 
@@ -144,10 +170,25 @@ function Draw() {
     ctx.clearRect(0,0,854,480);
 	ctx.drawImage(spr_pig, player.x, player.y, 32, 32);
 	for(let i = 0; i<box.length; i++){
-        ctx.drawImage(spr_box, box[i][0], box[i][1], 32, 32);
+        ctx.drawImage(spr_box, box[i][1], box[i][2], 32, 32);
     }
-
-
+    ctx.fillText(Math.floor( (timeEnd - timeBegin) / 1000) ,20, 20);
 }
 
+function SpawningBox(){
+    for (var i = 0; i <= box.length; i++){
+        if(i == box.length){
+            box.push([true, Math.floor(Math.random() * 34) * 32, -32, Math.floor(Math.random())]);
+            break;
+        } else
+        if(box[i][0] == false){
+            box[i][0] = true;
+            box[i][1] = Math.floor(Math.random() * 25) * 34;
+            box[i][2] = -32;
+            box[i][3] = Math.floor(Math.random());
+            break;
+        }
+    }
+    setTimeout(SpawningBox, Time_spam)
+}
 Load();

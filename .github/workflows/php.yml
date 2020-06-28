@@ -1,64 +1,45 @@
-## Rest of the file pulled from https://github.com/actions/setup-python/blob/master/.github/workflows/workflow.yml
-name: Main workflow
-on:
-  push:
-    branches:
-      - master
-    tags:
-      - '*'
-    paths:
-      - '**'
-      - '!*.md'
-  pull_request:
-    paths:
-      - '**'
-      - '!*.md'
+name: PHP package
+
+on: [push]
+
 jobs:
   run:
-    name: Run
-    runs-on: ${{ matrix.operating-system }}
-    strategy:
-      fail-fast: false
+    runs-on: ${{ matrix.os }}
+    strategy:      
       matrix:
-        operating-system: [ubuntu-18.04, ubuntu-16.04, windows-2019, windows-2016]
-        php: [5.4, 5.5, 5.6, 7.1, 7.2, 7.4, 7.3, 7.2.11, 7.2.12]
-        exclude:
-          - operating-system: windows-2019
-            php: 7.2.11
-          - operating-system: windows-2016
-            php: 7.2.11
-          - operating-system: ubuntu-18.04
-            php: 7.2.12
-          - operating-system: ubuntu-16.04
-            php: 7.2.12
-
+        php-versions: ['7.1', '7.2', '7.3']
+        os: [ubuntu-latest, windows-latest, macOS-latest]        
     steps:
-    - name: Checkout
-      uses: actions/checkout@master
+    - uses: actions/checkout@v1
 
-    - name: Set Node.js 10.x
-      uses: actions/setup-node@master
+    # Setup PHP environment.
+    # Docs: https://github.com/shivammathur/setup-php/blob/master/README.md    
+    - name: Set up PHP ${{ matrix.php-versions }}
+      uses: shivammathur/setup-php@master
       with:
-        version: 10.x
+        php-version: ${{ matrix.php-versions }}
+      # extension-csv: mbstring, intl # (optional) specify the extensions you want to enable/install.
+      # ini-values-csv: short_open_tag=On # (optional) specify custom php.ini values.
+      # coverage: xdebug # (optional) specify coverage driver.
+      # pecl: false # (optional) use PECL as fallback to install extensions.
 
-    - name: npm install
-      if: matrix.operating-system == 'ubuntu-18.04' || matrix.operating-system == 'ubuntu-16.04'
-      run: npm install
+    - name: Check PHP Version
+      run: php -v
 
-    - name: Lint
-      if: matrix.operating-system == 'ubuntu-18.04' || matrix.operating-system == 'ubuntu-16.04'
-      run: npm run format-check
+    - name: Check Composer Version
+      run: composer -V
 
-    - name: npm test
-      if: matrix.operating-system == 'ubuntu-18.04' || matrix.operating-system == 'ubuntu-16.04'
-      run: npm test
+    - name: Check PHP Extensions
+      run: php -m
 
-    - name: Setup PHP
-      uses: ./
-      with:
-        php-version: ${{ matrix.php}}
+    - name: Validate composer.json and composer.lock
+      run: composer validate
 
-    - name: php --version
-      run: |
-        php -i
-        php -m
+    - name: Install dependencies
+      run: composer install --prefer-dist --no-progress --no-suggest
+
+    # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
+    # Docs: https://getcomposer.org/doc/articles/scripts.md
+
+    # - name: Run test suite
+    #   run: composer run-script test

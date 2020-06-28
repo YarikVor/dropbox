@@ -1,9 +1,9 @@
 {
-    "name": "Yarikvor_14",
+    "name": "yarikvor_14",
     "description": "example package",
     "authors": [
         {
-            "name": "Yarikvor",
+            "name": "yarikvor",
             "email": "yarikvor@gmail.com"
         }
     ],

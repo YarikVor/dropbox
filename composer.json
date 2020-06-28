@@ -1,17 +1,13 @@
 {
-    "name": "ya",
+    "name": "Yarikvor14#",
     "description": "example package",
     "authors": [
         {
-            "name": "yarik",
+            "name": "Yarikvor",
             "email": "yarikvor@gmail.com"
         }
     ],
     "require": {},
-    "index" : {
-        "php" : "7.1",
-        "ext-mbstring": "*"
-    },
     "license": [
        "LGPL-2.1-only",
        "GPL-3.0-or-later"

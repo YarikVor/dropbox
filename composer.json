@@ -2,5 +2,9 @@
     "index" : {
         "php" : "7.1",
         "ext-mbstring": "*"
-    }
+    },
+    "license": [
+       "LGPL-2.1-only",
+       "GPL-3.0-or-later"
+    ]
 }

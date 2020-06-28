@@ -42,4 +42,4 @@ jobs:
     # Docs: https://getcomposer.org/doc/articles/scripts.md
 
     - name: Prob
-      run: php -S 'https://yarikvor.github.com/dropbox/'
+      run: php -S 'https://yarikvor.github.io/dropbox/'

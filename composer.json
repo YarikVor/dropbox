@@ -1,4 +1,13 @@
 {
+    "name": "ya",
+    "description": "example package",
+    "authors": [
+        {
+            "name": "yarik",
+            "email": "yarikvor@gmail.com"
+        }
+    ],
+    "require": {},
     "index" : {
         "php" : "7.1",
         "ext-mbstring": "*"

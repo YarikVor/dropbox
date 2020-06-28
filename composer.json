@@ -1,5 +1,5 @@
 {
-    "require" : {
+    "index" : {
         "php" : "7.1",
         "ext-mbstring": "*"
     }

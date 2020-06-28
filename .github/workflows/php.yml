@@ -1,2 +1,64 @@
-- name: Setup PHP Action
-  uses: shivammathur/setup-php@2.3.1
+## Rest of the file pulled from https://github.com/actions/setup-python/blob/master/.github/workflows/workflow.yml
+name: Main workflow
+on:
+  push:
+    branches:
+      - master
+    tags:
+      - '*'
+    paths:
+      - '**'
+      - '!*.md'
+  pull_request:
+    paths:
+      - '**'
+      - '!*.md'
+jobs:
+  run:
+    name: Run
+    runs-on: ${{ matrix.operating-system }}
+    strategy:
+      fail-fast: false
+      matrix:
+        operating-system: [ubuntu-18.04, ubuntu-16.04, windows-2019, windows-2016]
+        php: [5.4, 5.5, 5.6, 7.1, 7.2, 7.4, 7.3, 7.2.11, 7.2.12]
+        exclude:
+          - operating-system: windows-2019
+            php: 7.2.11
+          - operating-system: windows-2016
+            php: 7.2.11
+          - operating-system: ubuntu-18.04
+            php: 7.2.12
+          - operating-system: ubuntu-16.04
+            php: 7.2.12
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@master
+
+    - name: Set Node.js 10.x
+      uses: actions/setup-node@master
+      with:
+        version: 10.x
+
+    - name: npm install
+      if: matrix.operating-system == 'ubuntu-18.04' || matrix.operating-system == 'ubuntu-16.04'
+      run: npm install
+
+    - name: Lint
+      if: matrix.operating-system == 'ubuntu-18.04' || matrix.operating-system == 'ubuntu-16.04'
+      run: npm run format-check
+
+    - name: npm test
+      if: matrix.operating-system == 'ubuntu-18.04' || matrix.operating-system == 'ubuntu-16.04'
+      run: npm test
+
+    - name: Setup PHP
+      uses: ./
+      with:
+        php-version: ${{ matrix.php}}
+
+    - name: php --version
+      run: |
+        php -i
+        php -m

@@ -13,7 +13,7 @@
 			<?php
 				$filename = 'somefile.txt';
 				$text = 'Text sample.';
-				$fd = fopen($filename, 'w+');
+				$fd = fopen($filename, 'r+');
 				echo "$fd";
 			?>
 		</div>

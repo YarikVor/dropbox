@@ -13,8 +13,9 @@
 			<?php
 				$filename = 'somefile.txt';
 				$text = 'Text sample.';
-				file_put_contents($filename, $text);
-				$text = file_get_contents($filename);
+				$bytesCount = file_put_contents($filename, $text);
+				if ($bytesCount === false) 
+				    echo "При сохранении данных произошла ошибка!";
 			?>
 		</div>
 	</body>

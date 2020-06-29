@@ -4,7 +4,7 @@
   <body>
     <?php
     $file = fopen ("somefile.txt", "r+");
-    echo $file;
+    echo fgets ($file);
     ?>
   
   </body>

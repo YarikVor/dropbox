@@ -15,7 +15,9 @@
 				$fd = fopen("$filename", 'x+') or die("не удалось создать файл");
 				$str = "Привет мир";
 				fwrite($fd, $str);
+				echo $filename;
 				fclose($fd);
+			
 			?>
 		</div>
 	</body>

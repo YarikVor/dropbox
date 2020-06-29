@@ -11,33 +11,14 @@
 		<script src="sc.js"></script>
 		<div>
 			<?php
-    /* Соединяемся, выбираем базу данных */
-    $link = mysql_connect("mysql_host", "mysql_user", "mysql_password")
-        or die("Could not connect : " . mysql_error());
-    print "Connected successfully";
-    mysql_select_db("my_database") or die("Could not select database");
-
-    /* Выполняем SQL-запрос */
-    $query = "SELECT * FROM my_table";
-    $result = mysql_query($query) or die("Query failed : " . mysql_error());
-
-    /* Выводим результаты в html */
-    print "<table>\n";
-    while ($line = mysql_fetch_array($result, MYSQL_ASSOC)) {
-        print "\t<tr>\n";
-        foreach ($line as $col_value) {
-            print "\t\t<td>$col_value</td>\n";
-        }
-        print "\t</tr>\n";
-    }
-    print "</table>\n";
-
-    /* Освобождаем память от результата */
-    mysql_free_result($result);
-
-    /* Закрываем соединение */
-    mysql_close($link);
-?>
+				$filename = 'somefile.txt';
+				$text = 'Text sample.';
+				//записываем текст в файл
+				file_put_contents($filename, $text);
+				...
+				//потом его можно прочитать из файла
+				$text = file_get_contents($filename);
+			?>
 		</div>
 	</body>
 </html>

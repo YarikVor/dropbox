@@ -1,15 +1,2 @@
 {
-    "name": "hex/example",
-    "description": "example package",
-    "authors": [
-        {
-            "name": "yarik_14vor",
-            "email": "yarikvor@gmail.com"
-        }
-    ],
-    "require": {},
-    "license": [
-       "LGPL-2.1-only",
-       "GPL-3.0-or-later"
-    ]
 }

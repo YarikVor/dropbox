@@ -14,6 +14,8 @@
 				$filename = 'somefile.txt';
 				$text = 'Text sample.';
 				$fd = fopen($filename, 'r+');
+				$str = htmlentities(file_get_contents($filename));
+				echo $str;
 				echo "$fd";
 			?>
 		</div>

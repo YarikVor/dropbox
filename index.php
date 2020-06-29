@@ -16,6 +16,10 @@
 				$bytesCount = file_put_contents($filename, $text);
 				if ($bytesCount === false) 
 				    echo "При сохранении данных произошла ошибка!";
+				else {
+				    file_put_contents($filename, $text);
+				    echo "good";
+				}
 			?>
 		</div>
 	</body>

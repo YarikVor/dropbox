@@ -12,11 +12,10 @@
 		<div>
 			<?php
 				$filename = 'somefile.txt';
-				$text = 'Text sample.';
-				$fd = fopen($filename, 'r+');
-				$str = htmlentities(file_get_contents($filename));
-				echo $str;
-				echo "$fd";
+				$fd = fopen("$filename", 'x+') or die("не удалось создать файл");
+				$str = "Привет мир";
+				fwrite($fd, $str);
+				fclose($fd);
 			?>
 		</div>
 	</body>

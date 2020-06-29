@@ -3,9 +3,11 @@
   <head></head>
   <body>
     <?php
-    $file = fopen ("somefile.txt", "r+");
-    fwrite ($file, "pig" . "\n");
+    $file = fopen ("somefile.txt", "w+");
+    fwrite ($file, "pig");
+    
     echo fgets ($file);
+    fclose ($file);
     ?>
   
   </body>

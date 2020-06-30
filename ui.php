@@ -3,7 +3,7 @@
   <head></head>
   <body>
     <?php
-    $file = fopen ("somefile.txt", "w+");
+    $file = fopen ("somefile.txt", "w");
     fwrite ($file, "pig");
     
     echo fgets ($file);

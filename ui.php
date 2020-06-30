@@ -2,6 +2,7 @@
 <html>
   <head></head>
   <body>
+    <?php
 $filename = 'test.txt';
 $somecontent = "Добавить это к файлу\n";
 
